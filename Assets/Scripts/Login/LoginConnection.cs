@@ -1,23 +1,14 @@
 using System;
 using System.Collections;
+using System.Net.Http;
 using System.Text;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 
 public class LoginConnection : MonoBehaviour
 {
-    private string nextScene = "MainMenuScene";
-    public TMP_InputField iUsername;
-    public TMP_InputField iPassword;
-
-    private void Start()
-    {
-        iUsername = GameObject.Find("InputUser")?.GetComponent<TMP_InputField>();
-        iPassword = GameObject.Find("InputPassword")?.GetComponent<TMP_InputField>();
-    }
-
+    private readonly HttpClient _client = new HttpClient();
+    
     [Serializable]
     public struct LoginStructure
     {
@@ -32,8 +23,8 @@ public class LoginConnection : MonoBehaviour
     public void LoginAction()
     {
         LoginStructure data;
-        data.username = iUsername.text;
-        data.password = iPassword.text;
+        data.username = "Caracola111";
+        data.password = "r1234";
         StartCoroutine(LoginPost(data));
     }
     
@@ -53,11 +44,29 @@ public class LoginConnection : MonoBehaviour
         {
             Debug.Log(request.downloadHandler.text);
             Debug.Log("Login correcto " + request.result);
-            SceneManager.LoadScene(nextScene);
         }
         else
         {
             Debug.LogError(request.error);
+        }
+    }
+
+    public async void CallApi()
+    {
+        try
+        {
+            HttpResponseMessage response = await _client.GetAsync("https://pokeapi.co/api/v2/pokemon/ditto");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            // Above three lines can be replaced with new helper method below
+            // string responseBody = await client.GetStringAsync(uri);
+
+            Debug.Log(responseBody);
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine("Exception Caught!");
+            Console.WriteLine("Message :{0} ", e.Message);
         }
     }
 }
