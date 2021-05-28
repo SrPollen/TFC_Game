@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     private bool _isWalking;
     private bool _isRunning;
+    private bool _isJumping;
 
     
     private Animator _animator;
@@ -51,7 +52,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("start");
         _controller = gameObject.GetComponent<CharacterController>();
         _cameraMainTransform = Camera.main.transform;
     }
@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         _groundedPlayer = _controller.isGrounded;
+        
         if (_groundedPlayer && _playerVelocity.y < 0)
         {
             _playerVelocity.y = 0f;
@@ -74,7 +75,12 @@ public class PlayerController : MonoBehaviour
         // Changes the height position of the player..
         if (jumpControl.action.triggered && _groundedPlayer)
         {
+            _isJumping = true;
             _playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+        }
+        else
+        {
+            _isJumping = false;
         }
 
         _playerVelocity.y += gravityValue * Time.deltaTime;
@@ -103,12 +109,15 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _isWalking = false;
             _isRunning = false;
+            _isWalking = false;
+            
         }
-
+        
         _animator.SetBool("isWalking", _isWalking);
         _animator.SetBool("isRunning", _isRunning);
+        _animator.SetBool("isJumping", _isJumping);
+        
     }
     
 }
