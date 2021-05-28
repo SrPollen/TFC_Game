@@ -24,11 +24,11 @@ public class PlayerController : MonoBehaviour
     private bool _groundedPlayer;
     private Transform _cameraMainTransform;
 
-    private bool isWalking;
-    private bool isRunning;
+    private bool _isWalking;
+    private bool _isRunning;
 
     
-    public Animator _animator;
+    private Animator _animator;
 
     private void OnEnable()
     {
@@ -44,11 +44,15 @@ public class PlayerController : MonoBehaviour
         runControl.action.Disable();
     }
 
+    private void Awake()
+    {
+        _animator = skin.GetComponent<Animator>();
+    }
+
     private void Start()
     {
         _controller = gameObject.GetComponent<CharacterController>();
         _cameraMainTransform = Camera.main.transform;
-        _animator = skin.GetComponent<Animator>();
     }
 
     void Update()
@@ -80,33 +84,29 @@ public class PlayerController : MonoBehaviour
             float targetAngle = Mathf.Atan2(movement.x, movement.y) * Mathf.Rad2Deg + _cameraMainTransform.eulerAngles.y;
             Quaternion rotation = Quaternion.Euler(0f, targetAngle, 0f);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+            
+            
+            //Animations and run
+            if (!_isWalking)
+            {
+                currentSpeed = walkSpeed;
+                _isWalking = true;
+                _isRunning = false;
+            }
+            if (Keyboard.current.leftShiftKey.isPressed)
+            {
+                currentSpeed = runSpeed;
+                _isWalking = false;
+                _isRunning = true;
+            }
         }
-        
-        //Animations
-        //Debug.Log(movement.x + " y: " + movement.y);
-        if (!isWalking && movement != Vector2.zero)
+        else
         {
-            currentSpeed = walkSpeed;
-            isWalking = true;
-            isRunning = false;
+            _isWalking = false;
         }
 
-        if (movement != Vector2.zero)
-        {
-            isWalking = false;
-        }
-        
-        if (Keyboard.current.leftShiftKey.isPressed)
-        {
-            currentSpeed = runSpeed;
-            isWalking = false;
-            isRunning = true;
-        }
-        
-        _animator.SetBool("isWalking", isWalking);
-        _animator.SetBool("isRunning", isRunning);
-        Debug.Log("isRunning: " + isRunning + " walk: " + isWalking  + " is running? " +_animator.GetFloat("Prueba") +   _animator.GetBool("isRunning") + " is walking? " +  _animator.GetBool("isWalking"));
-        
+        _animator.SetBool("isWalking", _isWalking);
+        _animator.SetBool("isRunning", _isRunning);
     }
     
 }
