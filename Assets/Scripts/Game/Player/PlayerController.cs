@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("start");
         _controller = gameObject.GetComponent<CharacterController>();
         _cameraMainTransform = Camera.main.transform;
     }
@@ -103,6 +104,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             _isWalking = false;
+            _isRunning = false;
         }
 
         _animator.SetBool("isWalking", _isWalking);
