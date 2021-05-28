@@ -3,11 +3,18 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(GameObject))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private GameObject skin;
+    
     [SerializeField] private InputActionReference movementControl;
     [SerializeField] private InputActionReference jumpControl;
-    [SerializeField] private float playerSpeed = 2.0f;
+    [SerializeField] private InputActionReference runControl;
+    
+    [SerializeField] private float walkSpeed = 2.0f;
+    [SerializeField] private float runSpeed = 5.0f;
+    [SerializeField] private float currentSpeed = 2.0f;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float rotationSpeed = 4f;
@@ -17,22 +24,31 @@ public class PlayerController : MonoBehaviour
     private bool _groundedPlayer;
     private Transform _cameraMainTransform;
 
+    private bool isWalking;
+    private bool isRunning;
+
+    
+    public Animator _animator;
+
     private void OnEnable()
     {
         movementControl.action.Enable();
         jumpControl.action.Enable();
+        runControl.action.Enable();
     }
 
     private void OnDisable()
     {
         movementControl.action.Disable();
         jumpControl.action.Disable();
+        runControl.action.Disable();
     }
 
     private void Start()
     {
         _controller = gameObject.GetComponent<CharacterController>();
         _cameraMainTransform = Camera.main.transform;
+        _animator = skin.GetComponent<Animator>();
     }
 
     void Update()
@@ -48,7 +64,7 @@ public class PlayerController : MonoBehaviour
         move = _cameraMainTransform.forward * move.z + _cameraMainTransform.right * move.x;
         move.y = 0f;
         
-        _controller.Move(move * Time.deltaTime * playerSpeed);
+        _controller.Move(move * Time.deltaTime * currentSpeed);
         
         // Changes the height position of the player..
         if (jumpControl.action.triggered && _groundedPlayer)
@@ -65,5 +81,32 @@ public class PlayerController : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(0f, targetAngle, 0f);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
         }
+        
+        //Animations
+        //Debug.Log(movement.x + " y: " + movement.y);
+        if (!isWalking && movement != Vector2.zero)
+        {
+            currentSpeed = walkSpeed;
+            isWalking = true;
+            isRunning = false;
+        }
+
+        if (movement != Vector2.zero)
+        {
+            isWalking = false;
+        }
+        
+        if (Keyboard.current.leftShiftKey.isPressed)
+        {
+            currentSpeed = runSpeed;
+            isWalking = false;
+            isRunning = true;
+        }
+        
+        _animator.SetBool("isWalking", isWalking);
+        _animator.SetBool("isRunning", isRunning);
+        Debug.Log("isRunning: " + isRunning + " walk: " + isWalking  + " is running? " +_animator.GetFloat("Prueba") +   _animator.GetBool("isRunning") + " is walking? " +  _animator.GetBool("isWalking"));
+        
     }
+    
 }
