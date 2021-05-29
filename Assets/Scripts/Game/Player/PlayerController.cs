@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private bool _isRunning;
     private bool _startJump;
     
-    private int _groundMask = 6;
+    //private int _groundMask = 6;
     public float distToGround = 0.95f;
 
 
@@ -103,16 +103,13 @@ public class PlayerController : MonoBehaviour
             _isRunning = false;
             _isWalking = false;
         }
-
-        //CheckGround();
-
         UpdateAnimator();
     }
 
 
     private void FixedUpdate()
     {
-        CheckGround();
+        _animator.SetBool("isGrounded", IsGrounded());
     }
 
     //Animations and run
@@ -139,39 +136,8 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void CheckGround()
+    private bool IsGrounded()
     {
-        _animator.SetBool("isGrounded", Physics.Raycast(transform.position, Vector3.down, distToGround));
-    }
-    
-    private void CheckGround1()
-    {
-        //int layerMask = 1 << 8;
-
-
-        // This would cast rays only against colliders in layer 8.
-        // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-        // layerMask = ~layerMask;
-
-        Debug.Log(Physics.Raycast(transform.position, Vector3.down, distToGround));
-        
-        
-        RaycastHit hit;
-        // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 10f, _groundMask))
-        {
-            Debug.DrawRay(transform.position, Vector3.down * 10f, Color.red);
-            Debug.Log("Did Hit");
-        }
-        else
-        {
-            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.green);
-            Debug.DrawRay(transform.position, Vector3.down * 10f, Color.green);
-            Debug.Log("Did not Hit");
-            //playerController.isGroundedAnim = true;
-        }
-        
-        
-  
+        return Physics.Raycast(transform.position, Vector3.down, distToGround);
     }
 }
