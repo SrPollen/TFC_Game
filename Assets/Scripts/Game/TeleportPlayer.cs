@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class TeleportPlayer : MonoBehaviour
 {
@@ -11,7 +8,6 @@ public class TeleportPlayer : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("hola");
             other.gameObject.GetComponent<CharacterController>().Move(tpPos);
         }
     }
