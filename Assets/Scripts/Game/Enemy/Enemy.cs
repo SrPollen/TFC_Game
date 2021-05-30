@@ -11,7 +11,10 @@ public class Enemy : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    public int health;
+    public GameObject projectile;
+
+    public int maxHealth;
+    public int currentHealth;
 
     //Patrol
     public Vector3 walkPoint;
@@ -71,18 +74,24 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Chasing");
         agent.SetDestination(player.position);
+        
     }
 
     private void AttackPlayer()
     {
         // Para que no se mueva cuando ataca
-        agent.SetDestination(player.position);
+        agent.SetDestination(transform.position);
 
         transform.LookAt(player);
+        
         if (!alreadyAttacked)
         {
             //atack code
             Debug.Log("Attack");
+            
+            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 20f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 6f, ForceMode.Impulse);
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -96,8 +105,8 @@ public class Enemy : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        health -= damage;
-        if (health <= 0) DestroyEnemy();
+        currentHealth -= damage;
+        if (currentHealth <= 0) DestroyEnemy();
     }
 
     private void DestroyEnemy()

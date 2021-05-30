@@ -119,13 +119,7 @@ public class PlayerController : MonoBehaviour
             TakeDamage(20);
         }
     }
-
-
-    private void FixedUpdate()
-    {
-        
-    }
-
+    
     //Animations and run
     private void CheckWalkAndRun()
     {
@@ -156,7 +150,7 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(transform.position, Vector3.down, distToGround);
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
