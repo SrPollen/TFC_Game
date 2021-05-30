@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float rotationSpeed = 4f;
 
+    public int maxHealth;
+    public int currentHealth;
+    public HealthBar healthBar;
+
     private CharacterController _controller;
     private Vector3 _playerVelocity;
     private bool _groundedPlayer;
@@ -30,8 +34,7 @@ public class PlayerController : MonoBehaviour
     
     //private int _groundMask = 6;
     public float distToGround = 0.95f;
-
-
+    
     private Animator _animator;
 
     private void OnEnable()
@@ -57,6 +60,11 @@ public class PlayerController : MonoBehaviour
     {
         _controller = gameObject.GetComponent<CharacterController>();
         _cameraMainTransform = Camera.main.transform;
+        
+        //health
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetHealth(maxHealth);
     }
 
     void Update()
@@ -76,7 +84,8 @@ public class PlayerController : MonoBehaviour
         _controller.Move(move * Time.deltaTime * currentSpeed);
 
         // Changes the height position of the player..
-        if (jumpControl.action.triggered && _groundedPlayer)
+        //_groundedPlayer
+        if (jumpControl.action.triggered && IsGrounded())
         {
             _startJump = true;
             _playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
@@ -104,12 +113,17 @@ public class PlayerController : MonoBehaviour
             _isWalking = false;
         }
         UpdateAnimator();
+
+        if (Keyboard.current.enterKey.wasPressedThisFrame)
+        {
+            TakeDamage(20);
+        }
     }
 
 
     private void FixedUpdate()
     {
-        _animator.SetBool("isGrounded", IsGrounded());
+        
     }
 
     //Animations and run
@@ -133,11 +147,19 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isWalking", _isWalking);
         _animator.SetBool("isRunning", _isRunning);
         _animator.SetBool("startJump", _startJump);
+        _animator.SetBool("isGrounded", IsGrounded());
     }
 
 
     private bool IsGrounded()
     {
         return Physics.Raycast(transform.position, Vector3.down, distToGround);
+    }
+
+    private void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+        Debug.Log(currentHealth);
     }
 }
