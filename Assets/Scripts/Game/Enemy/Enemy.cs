@@ -86,12 +86,14 @@ public class Enemy : MonoBehaviour
         
         if (!alreadyAttacked)
         {
-            //atack code
+            //Ataques
             Debug.Log("Attack");
-            
+
+            //Vector3 projectileSpawn = transform.position + new Vector3(10,20,0);
             Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 20f, ForceMode.Impulse);
             rb.AddForce(transform.up * 6f, ForceMode.Impulse);
+            
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -120,5 +122,9 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+        
+        Vector3 direction = transform.forward * 10;
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, direction);
     }
 }

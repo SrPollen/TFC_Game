@@ -1298,7 +1298,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95734436}
-  m_LocalRotation: {x: 0.022630533, y: -0.000000027918187, z: 6.3196526e-10, w: 0.99974394}
+  m_LocalRotation: {x: 0.022630565, y: 0.000000028049861, z: -6.3494676e-10, w: 0.99974394}
   m_LocalPosition: {x: 2.359, y: 1.3429714, z: -7.3989487}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2613,7 +2613,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172017361}
-  m_LocalRotation: {x: 0.029894605, y: -0.000000017198687, z: 5.1437776e-10, w: 0.9995531}
+  m_LocalRotation: {x: 0.029894626, y: 0.000000017198698, z: -5.143785e-10, w: 0.9995531}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8556,7 +8556,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747060788}
-  m_LocalRotation: {x: -0.0064338343, y: -0.0000000013969551, z: -8.987963e-12, w: 0.9999793}
+  m_LocalRotation: {x: -0.00643383, y: 0.0000000018626068, z: 1.1983944e-11, w: 0.9999793}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10658,7 +10658,7 @@ GameObject:
   - component: {fileID: 948315799}
   m_Layer: 8
   m_Name: Mage
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10789,7 +10789,7 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 5
-  timeBetweenAttacks: 1.5
+  timeBetweenAttacks: 0.5
   sightRange: 30
   attackRange: 25
   playerInSightRange: 0

@@ -44,7 +44,6 @@ public class Projectile : MonoBehaviour
 
     private void Explode()
     {
-        Debug.Log("Explode");
         hasExploded = true;
         //Instanciate explosion
         //if (explosion != null)
