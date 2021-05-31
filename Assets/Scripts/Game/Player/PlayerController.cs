@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference movementControl;
     [SerializeField] private InputActionReference jumpControl;
     [SerializeField] private InputActionReference runControl;
+    [SerializeField] private InputActionReference attackControl;
 
     [SerializeField] private float walkSpeed = 2.0f;
     [SerializeField] private float runSpeed = 5.0f;
@@ -156,4 +157,20 @@ public class PlayerController : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         Debug.Log(currentHealth);
     }
+    
+    /*IEnumerator Cast()
+    {
+        canCast = false;
+        float curTimeLeft=dashDuration;
+        while (curTimeLeft >0)
+        {
+            Vector3 dasher = transform.forward * dashSpeed * Time.deltaTime;
+            controls.cc.Move(dasher);
+            curTimeLeft -= Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        controls.canMove = true;
+        yield return new WaitForSeconds(cooldown-dashDuration);
+        canCast = true;
+    }*/
 }
