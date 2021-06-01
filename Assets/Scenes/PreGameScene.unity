@@ -453,13 +453,13 @@ MonoBehaviour:
   movementControl: {fileID: -2765765650585123137, guid: da3f11b467a0cea4bb52f260771b8552, type: 3}
   jumpControl: {fileID: -5475245450641597297, guid: da3f11b467a0cea4bb52f260771b8552, type: 3}
   runControl: {fileID: 8330188875375718395, guid: da3f11b467a0cea4bb52f260771b8552, type: 3}
-  attackControl: {fileID: -9102256939935947438, guid: da3f11b467a0cea4bb52f260771b8552, type: 3}
   walkSpeed: 2
   runSpeed: 5
   currentSpeed: 2
   jumpHeight: 1
   gravityValue: -9.81
   rotationSpeed: 4
+  timeBetweenAttacks: 1
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 1985990254}
@@ -1299,7 +1299,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95734436}
-  m_LocalRotation: {x: 0.022630533, y: -0.00000002752316, z: 6.230233e-10, w: 0.99974394}
+  m_LocalRotation: {x: 0.022630533, y: -0.000000027304251, z: 6.18068e-10, w: 0.99974394}
   m_LocalPosition: {x: 2.359, y: 1.3429714, z: -7.3989487}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8557,7 +8557,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747060788}
-  m_LocalRotation: {x: -0.0064338297, y: -8.013412e-18, z: 2.888039e-20, w: 0.9999793}
+  m_LocalRotation: {x: -0.006433837, y: 5.755771e-10, z: 3.7032456e-12, w: 0.9999793}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10757,7 +10757,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948315793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.7, y: 1.28, z: -10.13}
+  m_LocalPosition: {x: -23.7, y: 1.28, z: -39.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1000671217}
@@ -10790,7 +10790,7 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 5
-  timeBetweenAttacks: 0.5
+  timeBetweenAttacks: 1.5
   sightRange: 30
   attackRange: 25
   playerInSightRange: 0

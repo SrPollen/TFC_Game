@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,8 +11,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private InputActionReference movementControl;
     [SerializeField] private InputActionReference jumpControl;
+
     [SerializeField] private InputActionReference runControl;
-    [SerializeField] private InputActionReference attackControl;
+    //[SerializeField] private InputActionReference attackControl;
 
     [SerializeField] private float walkSpeed = 2.0f;
     [SerializeField] private float runSpeed = 5.0f;
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float rotationSpeed = 4f;
+    [SerializeField] private float timeBetweenAttacks = 1f;
 
     public int maxHealth;
     public int currentHealth;
@@ -31,11 +34,13 @@ public class PlayerController : MonoBehaviour
 
     private bool _isWalking;
     private bool _isRunning;
+    private bool _isAttacking;
+    private bool _isDefending;
     private bool _startJump;
-    
+
     //private int _groundMask = 6;
     public float distToGround = 0.95f;
-    
+
     private Animator _animator;
 
     private void OnEnable()
@@ -61,7 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         _controller = gameObject.GetComponent<CharacterController>();
         _cameraMainTransform = Camera.main.transform;
-        
+
         //health
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
@@ -78,6 +83,9 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector2 movement = movementControl.action.ReadValue<Vector2>();
+
+        if (_isAttacking || _isDefending) movement = Vector2.zero;
+
         Vector3 move = new Vector3(movement.x, 0, movement.y);
         move = _cameraMainTransform.forward * move.z + _cameraMainTransform.right * move.x;
         move.y = 0f;
@@ -113,14 +121,14 @@ public class PlayerController : MonoBehaviour
             _isRunning = false;
             _isWalking = false;
         }
-        UpdateAnimator();
 
-        if (Keyboard.current.enterKey.wasPressedThisFrame)
-        {
-            TakeDamage(20);
-        }
+        CheckAttack();
+
+        CheckDefense();
+
+        UpdateAnimator();
     }
-    
+
     //Animations and run
     private void CheckWalkAndRun()
     {
@@ -143,8 +151,8 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isRunning", _isRunning);
         _animator.SetBool("startJump", _startJump);
         _animator.SetBool("isGrounded", IsGrounded());
+        _animator.SetBool("isDefending", _isDefending);
     }
-
 
     private bool IsGrounded()
     {
@@ -157,7 +165,39 @@ public class PlayerController : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         Debug.Log(currentHealth);
     }
-    
+
+    private void CheckAttack()
+    {
+        if (Mouse.current.leftButton.isPressed && !_isAttacking && !_isDefending)
+        {
+            Debug.Log("Attack true");
+            _animator.SetBool("isSlashing", true);
+            _isAttacking = true;
+            StartCoroutine(nameof(AttackCd));
+        }
+    }
+
+    IEnumerator AttackCd()
+    {
+        yield return new WaitForSeconds(0.8f);
+        _animator.SetBool("isSlashing", false);
+        _isAttacking = false;
+    }
+
+    private void CheckDefense()
+    {
+        if (!Keyboard.current.qKey.isPressed)
+        {
+            Debug.Log("Defense true");
+            _isDefending = false;
+        }
+        else
+        {
+            _isDefending = true;
+        }
+    }
+
+
     /*IEnumerator Cast()
     {
         canCast = false;

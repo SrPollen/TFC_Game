@@ -72,9 +72,7 @@ public class Enemy : MonoBehaviour
 
     private void ChasePlayer()
     {
-        Debug.Log("Chasing");
         agent.SetDestination(player.position);
-        
     }
 
     private void AttackPlayer()
@@ -87,9 +85,6 @@ public class Enemy : MonoBehaviour
         if (!alreadyAttacked)
         {
             //Ataques
-            Debug.Log("Attack");
-
-            //Vector3 projectileSpawn = transform.position + new Vector3(10,20,0);
             Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 20f, ForceMode.Impulse);
             rb.AddForce(transform.up * 6f, ForceMode.Impulse);
