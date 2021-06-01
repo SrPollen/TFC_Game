@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
 
     public GameObject projectile;
 
+    public HealthBar healthBar;
     public int maxHealth;
     public int currentHealth;
 
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
     //Attacking
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
+    
 
     //States
     public float sightRange, attackRange;
@@ -33,6 +35,11 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        
+        //health
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetHealth(maxHealth);
     }
 
 
@@ -100,12 +107,17 @@ public class Enemy : MonoBehaviour
         alreadyAttacked = false;
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        if (currentHealth <= 0) DestroyEnemy();
+        healthBar.SetHealth(currentHealth);
+        if (currentHealth <= 0) Die();
     }
 
+    private void Die()
+    {
+        DestroyEnemy();
+    }
     private void DestroyEnemy()
     {
         Destroy(gameObject);

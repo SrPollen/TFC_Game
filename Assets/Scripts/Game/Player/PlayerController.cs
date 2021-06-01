@@ -21,7 +21,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float rotationSpeed = 4f;
-    [SerializeField] private float timeBetweenAttacks = 1f;
+    
+    //attack
+    public Transform  attackPoint;
+    [SerializeField] private float timeBetweenAttacks = 0.8f;
+    [SerializeField] private float attackRange = 1f;
+    [SerializeField] private int playerDamage = 50;
+
+    public LayerMask whatIsEnemy;
 
     public int maxHealth;
     public int currentHealth;
@@ -163,7 +170,6 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
-        Debug.Log(currentHealth);
     }
 
     private void CheckAttack()
@@ -173,13 +179,23 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Attack true");
             _animator.SetBool("isSlashing", true);
             _isAttacking = true;
+            
             StartCoroutine(nameof(AttackCd));
+            
+            //Si le pegamos denbtro del rango dañara a todos los enemigos en el rango
+            Collider[] enemies = Physics.OverlapSphere(attackPoint.position, attackRange, whatIsEnemy);
+            foreach (Collider enemy in enemies)
+            {
+                Debug.Log("hit" +  enemy.name);
+                enemy.GetComponent<Enemy>().TakeDamage(playerDamage);
+            }
+           
         }
     }
 
     IEnumerator AttackCd()
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(timeBetweenAttacks);
         _animator.SetBool("isSlashing", false);
         _isAttacking = false;
     }
@@ -188,7 +204,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!Keyboard.current.qKey.isPressed)
         {
-            Debug.Log("Defense true");
             _isDefending = false;
         }
         else
@@ -197,6 +212,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
 
     /*IEnumerator Cast()
     {
