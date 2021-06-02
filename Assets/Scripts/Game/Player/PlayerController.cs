@@ -21,19 +21,27 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float rotationSpeed = 4f;
-    
+
     //attack
-    public Transform  attackPoint;
+    public Transform attackPoint;
     [SerializeField] private float timeBetweenAttacks = 0.8f;
+    [SerializeField] private float hitEnemiesDelay = 0.5f;
     [SerializeField] private float attackRange = 1f;
     [SerializeField] private int playerDamage = 50;
 
+
     public LayerMask whatIsEnemy;
 
+    //health
     public int maxHealth;
     public int currentHealth;
     public HealthBar healthBar;
 
+    //healing
+    [SerializeField] private int timeBeforeHeal = 5;
+    private int _currentTimeBeforeHeal;
+    private bool _canHeal;
+    
     private CharacterController _controller;
     private Vector3 _playerVelocity;
     private bool _groundedPlayer;
@@ -78,6 +86,9 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         healthBar.SetHealth(maxHealth);
+
+        //healing
+        StartCoroutine(nameof(HealCoroutine));
     }
 
     void Update()
@@ -99,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
         _controller.Move(move * Time.deltaTime * currentSpeed);
 
-        // Changes the height position of the player..
+        // Changes the height position of the player.
         //_groundedPlayer
         if (jumpControl.action.triggered && IsGrounded())
         {
@@ -170,6 +181,39 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+
+        _currentTimeBeforeHeal = timeBeforeHeal;
+    }
+
+    IEnumerator HealCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            _currentTimeBeforeHeal--;
+            if (_currentTimeBeforeHeal <= 0)
+            {
+                _canHeal = true;
+                if (_currentTimeBeforeHeal == 0)
+                {
+                    PasiveHealing();
+                }
+            }
+            else
+            {
+                _canHeal = false;
+            }
+        }
+    }
+
+    private void PasiveHealing()
+    {
+        if (_canHeal && currentHealth < maxHealth)
+        {
+            currentHealth++;
+            healthBar.SetHealth(currentHealth);
+            Invoke(nameof(PasiveHealing), 0.1f);
+        }
     }
 
     private void CheckAttack()
@@ -179,17 +223,22 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Attack true");
             _animator.SetBool("isSlashing", true);
             _isAttacking = true;
-            
+
             StartCoroutine(nameof(AttackCd));
-            
-            //Si le pegamos denbtro del rango dañara a todos los enemigos en el rango
-            Collider[] enemies = Physics.OverlapSphere(attackPoint.position, attackRange, whatIsEnemy);
-            foreach (Collider enemy in enemies)
-            {
-                Debug.Log("hit" +  enemy.name);
-                enemy.GetComponent<Enemy>().TakeDamage(playerDamage);
-            }
-           
+            StartCoroutine(nameof(DamageEnemies));
+        }
+    }
+
+    IEnumerator DamageEnemies()
+    {
+        yield return new WaitForSeconds(hitEnemiesDelay);
+
+        //Si le pegamos denbtro del rango dañara a todos los enemigos en el rango
+        Collider[] enemies = Physics.OverlapSphere(attackPoint.position, attackRange, whatIsEnemy);
+        foreach (Collider enemy in enemies)
+        {
+            Debug.Log("hit" + enemy.name);
+            enemy.GetComponent<Enemy>().TakeDamage(playerDamage);
         }
     }
 
