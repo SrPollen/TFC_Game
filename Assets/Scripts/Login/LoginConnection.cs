@@ -40,7 +40,7 @@ public class LoginConnection : MonoBehaviour
     
     IEnumerator LoginPost(LoginStructure data)
     {
-        UnityWebRequest request = new UnityWebRequest("http://localhost:8080/login" , "POST");
+        UnityWebRequest request = new UnityWebRequest("http://localhost:8080/gamelogin" , "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(JsonUtility.ToJson(data));
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
@@ -49,16 +49,17 @@ public class LoginConnection : MonoBehaviour
         yield return request.SendWebRequest();
         
         Debug.Log("Status Code: " + request.responseCode);
+        Debug.Log("Login " + request.result);
         
-        if (request.result == UnityWebRequest.Result.Success && !string.IsNullOrEmpty(request.downloadHandler.text))
+        //!string.IsNullOrEmpty(request.downloadHandler.text)
+        if (request.result == UnityWebRequest.Result.Success && int.Parse(request.downloadHandler.text) != -1)
         {
-            Debug.Log(request.downloadHandler.text);
-            Debug.Log("Login correcto " + request.result);
+            PlayerPrefs.SetInt("PlayerID", int.Parse(request.downloadHandler.text));
             SceneManager.LoadScene(nextScene);
         }
         else
         {
-            Debug.LogError(request.error);
+            Debug.Log("Intento de login fallido");
         }
     }
 }

@@ -57,6 +57,13 @@ public class PlayerController : MonoBehaviour
     public float distToGround = 0.95f;
 
     private Animator _animator;
+    
+    //To call api at the end
+    public ApiStats apiStats; 
+    private int _kills = 0;
+    private int _damage = 0;
+    private int _playTime = 0;
+    private int _waves = 0;
 
     private void OnEnable()
     {
@@ -141,9 +148,7 @@ public class PlayerController : MonoBehaviour
         }
 
         CheckAttack();
-
         CheckDefense();
-
         UpdateAnimator();
     }
 
@@ -266,7 +271,28 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+    
+    
+    
+    
+    private void EndGame()
+    {
+        apiStats.Kills = _kills ;
+        apiStats.Damage = _damage;
+        apiStats.PlayTime = _playTime;
+        apiStats.Waves = _waves;
+        
+        apiStats.PutGame();
+    }
 
+    
+    
+    
+    
+    
+    
+    
+    
     /*IEnumerator Cast()
     {
         canCast = false;
