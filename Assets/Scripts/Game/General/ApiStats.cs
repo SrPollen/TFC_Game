@@ -7,7 +7,6 @@ using UnityEngine.Networking;
 
 public class ApiStats: MonoBehaviour
 {
-    public int Id { get; set; }
     public int Waves { get; set; }
     public int PlayTime { get; set; }
     public int Kills { get; set; }
@@ -30,12 +29,14 @@ public class ApiStats: MonoBehaviour
         data.kills = Kills;
         data.damage = Damage;
         
+        Debug.Log(data);
         StartCoroutine(Upload(data));
     }
 
     IEnumerator Upload(PutStructure data) {
-
-        UnityWebRequest request = new UnityWebRequest("http://localhost:8080/update/" + Id , "PUT");
+        int id = PlayerPrefs.GetInt("PlayerID");
+        
+        UnityWebRequest request = new UnityWebRequest("http://localhost:8080/update/" + id , "PUT");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(JsonUtility.ToJson(data));
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();

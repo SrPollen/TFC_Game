@@ -24,16 +24,18 @@ public class SpawnManager : MonoBehaviour
     public Wave wave;
     public Transform[] spawnPoints;
 
+    public int currentWave;
     public float timeBetweenWaves = 5f;
     public float waveCountdown;
 
     private float _enemySearchCountdown = 1f;
 
-    private SpawnState state = SpawnState.Counting;
+    public SpawnState state = SpawnState.Counting;
 
     private void Start()
     {
         waveCountdown = timeBetweenWaves;
+        currentWave = 1;
     }
 
     private void Update()
@@ -56,7 +58,7 @@ public class SpawnManager : MonoBehaviour
         {
             if (state != SpawnState.Spawning)
             {
-                //satrt
+                //start
                 StartCoroutine(SpawnWave(wave));
             }
         }
@@ -71,6 +73,8 @@ public class SpawnManager : MonoBehaviour
         state = SpawnState.Counting;
         waveCountdown = timeBetweenWaves;
         wave.numberOfEnemies += 2;
+
+        currentWave++;
 
         Debug.Log("Wave compeleted" + wave.numberOfEnemies);
     }
