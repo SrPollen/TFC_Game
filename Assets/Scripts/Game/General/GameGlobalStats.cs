@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class GameGlobalStats : MonoBehaviour
 {
-    private float _minutes;
+    private float _playTimeHours, _minutes, _seconds;
     public bool endGame;
 
     private int _currentEnemies;
@@ -17,16 +17,24 @@ public class GameGlobalStats : MonoBehaviour
     [SerializeField] private Text waveNumberText;
     
     [SerializeField] private Text enemiesText;
+    
+    [SerializeField] private Text timerText;
 
     void Start()
     {
+        _playTimeHours = 0;
         _currentEnemies = 0;
-        InvokeRepeating(nameof(GetCurrentEnemies),5, 2);
+        _minutes = 0;
+        _seconds = 0;
+        InvokeRepeating(nameof(GetCurrentEnemies),5, 1);
     }
 
     void Update()
     {
-        _minutes += Time.deltaTime / 60f;
+        _minutes = (int)(Time.time / 60f);
+        _seconds = (int)(Time.time % 60f);
+        _playTimeHours += Time.deltaTime / 3600;
+        timerText.text = "Tiempo: " + _minutes.ToString("00") + ":" + _seconds.ToString("00");
 
         switch (spawnManager.state)
         {
@@ -59,5 +67,6 @@ public class GameGlobalStats : MonoBehaviour
     private void GetCurrentEnemies()
     {
         _currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        enemiesText.text = "Enemigos: " + _currentEnemies;
     }
 }
