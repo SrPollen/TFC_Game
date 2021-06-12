@@ -5,6 +5,10 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
+    
+    [SerializeField] private GameObject skin;
+    private Animator _animator;
+    
     public NavMeshAgent agent;
 
     public Transform player;
@@ -24,7 +28,7 @@ public class Enemy : MonoBehaviour
 
     //Attacking
     public float timeBetweenAttacks;
-    private bool alreadyAttacked;
+    private bool _alreadyAttacked;
     
 
     //States
@@ -35,6 +39,7 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        _animator = skin.GetComponent<Animator>();
         
         //health
         currentHealth = maxHealth;
@@ -58,6 +63,8 @@ public class Enemy : MonoBehaviour
 
     private void Patroling()
     {
+        _animator.SetBool("isRunning", false);
+        _animator.SetBool("isWalking", true);
         if (!walkPointSet) SearchWalkPoint();
         if (walkPointSet) agent.SetDestination(walkPoint);
 
@@ -79,17 +86,21 @@ public class Enemy : MonoBehaviour
 
     private void ChasePlayer()
     {
+        _animator.SetBool("isRunning", true);
+        _animator.SetBool("isWalking", false);
         agent.SetDestination(player.position);
     }
 
     private void AttackPlayer()
     {
+        _animator.SetBool("isRunning", false);
+        _animator.SetBool("isWalking", false);
         // Para que no se mueva cuando ataca
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
         
-        if (!alreadyAttacked)
+        if (!_alreadyAttacked)
         {
             //Ataques
             Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
@@ -97,14 +108,20 @@ public class Enemy : MonoBehaviour
             rb.AddForce(transform.up * 6f, ForceMode.Impulse);
             
 
-            alreadyAttacked = true;
+            _alreadyAttacked = true;
+            Invoke(nameof(AttackAnimation), timeBetweenAttacks - 2.5f);
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
 
+    private void AttackAnimation()
+    {
+        _animator.ResetTrigger("isAttacking");
+        _animator.SetTrigger("isAttacking");
+    }
     private void ResetAttack()
     {
-        alreadyAttacked = false;
+        _alreadyAttacked = false;
     }
 
     public void TakeDamage(int damage)

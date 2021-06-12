@@ -225,7 +225,6 @@ public class PlayerController : MonoBehaviour
     {
         if (Mouse.current.leftButton.isPressed && !_isAttacking && !_isDefending)
         {
-            Debug.Log("Attack true");
             _animator.SetBool("isSlashing", true);
             _isAttacking = true;
 
@@ -282,7 +281,9 @@ public class PlayerController : MonoBehaviour
         apiStats.PlayTime = _playTime;
         apiStats.Waves = _waves;
         
-        apiStats.PutGame();
+        
+        Debug.Log(apiStats.ToString());
+        //apiStats.PutGame();
     }
 
     
