@@ -5,7 +5,6 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
-    
     [SerializeField] private GameObject skin;
     private Animator _animator;
     
@@ -17,6 +16,7 @@ public class Enemy : MonoBehaviour
 
     public GameObject projectile;
 
+    //health
     public HealthBar healthBar;
     public int maxHealth;
     public int currentHealth;

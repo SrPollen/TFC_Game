@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -22,6 +21,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     public Wave wave;
+    public Enemy enemyStats;
     public Transform[] spawnPoints;
 
     public int currentWave;
@@ -32,14 +32,20 @@ public class SpawnManager : MonoBehaviour
 
     public SpawnState state = SpawnState.Counting;
 
+    //cuando el player cruza el portal (teleportplayer)
+    public bool gameStarted;
+
     private void Start()
     {
+        gameStarted = false;
         waveCountdown = timeBetweenWaves;
         currentWave = 1;
     }
 
     private void Update()
     {
+        if (!gameStarted) return;
+            
         if (state == SpawnState.Waiting)
         {
             //check enemies still alive
@@ -72,7 +78,7 @@ public class SpawnManager : MonoBehaviour
     {
         state = SpawnState.Counting;
         waveCountdown = timeBetweenWaves;
-        wave.numberOfEnemies += 2;
+        wave.numberOfEnemies += 3;
 
         currentWave++;
 
@@ -97,6 +103,10 @@ public class SpawnManager : MonoBehaviour
     IEnumerator SpawnWave(Wave wave)
     {
         state = SpawnState.Spawning;
+
+        //Mejora de enemigos por oleada
+        enemyStats.sightRange += 5;
+        enemyStats.maxHealth += 15;
 
         for (int i = 0; i < wave.numberOfEnemies; i++)
         {

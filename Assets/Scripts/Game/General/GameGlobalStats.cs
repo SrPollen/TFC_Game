@@ -20,8 +20,11 @@ public class GameGlobalStats : MonoBehaviour
     
     [SerializeField] private Text timerText;
 
+    public bool gameStarted;
+
     void Start()
     {
+        gameStarted = false;
         _playTimeHours = 0;
         _currentEnemies = 0;
         _minutes = 0;
@@ -35,7 +38,10 @@ public class GameGlobalStats : MonoBehaviour
         _seconds = (int)(Time.time % 60f);
         _playTimeHours += Time.deltaTime / 3600;
         timerText.text = "Tiempo: " + _minutes.ToString("00") + ":" + _seconds.ToString("00");
-
+        
+        if (!gameStarted) return;
+        waveAnimator.SetTrigger("GameStarted");
+        
         switch (spawnManager.state)
         {
             case SpawnManager.SpawnState.Counting:
@@ -45,7 +51,7 @@ public class GameGlobalStats : MonoBehaviour
                 UpdateSpawningUI();
                 break;
         }
-
+        
         if (endGame)
         {
             

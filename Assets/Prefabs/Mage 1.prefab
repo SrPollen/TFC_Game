@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!95 &7747511978537062172
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192586830096835525}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: e214bb6445865e3458a6e71f3a282a80, type: 3}
+  m_Controller: {fileID: 9100000, guid: 7ca63ac6ce2cefa40bff5f4b4efda561, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7747511978080661175
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,13 +296,13 @@ MonoBehaviour:
     m_Bits: 128
   projectile: {fileID: 5848907809382074079, guid: 585447a1cffa2764a928061b2095dba2, type: 3}
   healthBar: {fileID: 7747511978910512046}
-  maxHealth: 100
+  maxHealth: 50
   currentHealth: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 5
   timeBetweenAttacks: 5
-  sightRange: 30
+  sightRange: 40
   attackRange: 25
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -362,25 +381,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &7747511978537062172
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3192586830096835525}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: e214bb6445865e3458a6e71f3a282a80, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7ca63ac6ce2cefa40bff5f4b4efda561, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7747511979581792779
 GameObject:
   m_ObjectHideFlags: 0
