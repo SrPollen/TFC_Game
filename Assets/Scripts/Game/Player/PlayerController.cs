@@ -28,8 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hitEnemiesDelay = 0.5f;
     [SerializeField] private float attackRange = 1f;
     [SerializeField] private int playerDamage = 50;
-
-
+    
     public LayerMask whatIsEnemy;
 
     //health
@@ -59,11 +58,9 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     
     //To call api at the end
-    public ApiStats apiStats; 
+    public GameGlobalStats globalStats; 
     private int _kills = 0;
-    private int _damage = 0;
-    private int _playTime = 0;
-    private int _waves = 0;
+    private int _totalDamage = 0;
 
     private void OnEnable()
     {
@@ -186,6 +183,10 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+        if (currentHealth <= 0)
+        {
+            StartCoroutine(nameof(EndGame));
+        }
 
         _currentTimeBeforeHeal = timeBeforeHeal;
     }
@@ -241,8 +242,8 @@ public class PlayerController : MonoBehaviour
         Collider[] enemies = Physics.OverlapSphere(attackPoint.position, attackRange, whatIsEnemy);
         foreach (Collider enemy in enemies)
         {
-            Debug.Log("hit" + enemy.name);
             enemy.GetComponent<Enemy>().TakeDamage(playerDamage);
+            _totalDamage += playerDamage;
         }
     }
 
@@ -270,30 +271,17 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
-    
-    
-    
-    
-    private void EndGame()
+
+    IEnumerator EndGame()
     {
-        apiStats.Kills = _kills ;
-        apiStats.Damage = _damage;
-        apiStats.PlayTime = _playTime;
-        apiStats.Waves = _waves;
+        yield return new WaitForSeconds(1f);
+
+        //Time.timeScale = 0;
         
-        
-        Debug.Log(apiStats.ToString());
-        //apiStats.PutGame();
+        globalStats.Damage = _totalDamage;
+        globalStats.endGame = true;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
     /*IEnumerator Cast()
     {
         canCast = false;

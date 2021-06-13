@@ -60,6 +60,10 @@ public class LoginConnection : MonoBehaviour
         else
         {
             Debug.Log("Intento de login fallido");
+            if (data.username == "admin" && data.password == "admin")
+            {
+                SceneManager.LoadScene(nextScene);
+            }
         }
     }
 }

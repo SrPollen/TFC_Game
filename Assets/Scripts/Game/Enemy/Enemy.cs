@@ -39,9 +39,12 @@ public class Enemy : MonoBehaviour
     public int maxHealthBoost;
     public int sightRangeBoost;
 
+    public GameGlobalStats globalStats;
+
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
+        globalStats = GameObject.Find("GameManager").GetComponent<GameGlobalStats>();
         agent = GetComponent<NavMeshAgent>();
         _animator = skin.GetComponent<Animator>();
 
@@ -137,6 +140,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        globalStats.Kills = globalStats.Kills + 1;
         DestroyEnemy();
     }
     private void DestroyEnemy()

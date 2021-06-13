@@ -1,26 +1,44 @@
+using System;
+using System.Collections;
+using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class GameGlobalStats : MonoBehaviour
 {
     private float _playTimeHours, _minutes, _seconds;
     public bool endGame;
+    private bool _isSended;
+
 
     private int _currentEnemies;
 
     [SerializeField] private SpawnManager spawnManager;
     
+    //waves
     [SerializeField] private Animator waveAnimator;
-    
     [SerializeField] private Text waveCountdownText;
-    
     [SerializeField] private Text waveNumberText;
     
+    //texts
     [SerializeField] private Text enemiesText;
-    
     [SerializeField] private Text timerText;
 
     public bool gameStarted;
+    
+    public int Kills { get; set; }
+    public int Damage { get; set; }
+    
+    
+    [Serializable]
+    public struct PutStructure
+    {
+        public int maxWave;
+        public float playtime;
+        public int kills;
+        public int damage;
+    }
 
     void Start()
     {
@@ -52,9 +70,9 @@ public class GameGlobalStats : MonoBehaviour
                 break;
         }
         
-        if (endGame)
+        if (endGame && !_isSended)
         {
-            
+            PutGame();
         }
     }
     
@@ -74,5 +92,40 @@ public class GameGlobalStats : MonoBehaviour
     {
         _currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         enemiesText.text = "Enemigos: " + _currentEnemies;
+    }
+    
+    public void PutGame()
+    {
+        _isSended = true;
+        
+        PutStructure data;
+        data.maxWave = spawnManager.currentWave;
+        data.playtime = _playTimeHours;
+        data.kills = Kills;
+        data.damage = Damage;
+        
+        StartCoroutine(Upload(data));
+    }
+
+    IEnumerator Upload(PutStructure data) {
+        int id = PlayerPrefs.GetInt("PlayerID");
+        Debug.Log(id);
+        
+        UnityWebRequest request = new UnityWebRequest("http://localhost:8080/update/" + id , "PUT");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(JsonUtility.ToJson(data));
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        
+        yield return request.SendWebRequest();
+ 
+        Debug.Log("Status Code: " + request.responseCode);
+        Debug.Log("Put " + request.result);
+        if (request.result != UnityWebRequest.Result.Success) {
+            Debug.Log(request.error);
+        }
+        else {
+            Debug.Log("Upload complete!");
+        }
     }
 }

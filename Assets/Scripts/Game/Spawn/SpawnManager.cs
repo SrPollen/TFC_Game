@@ -85,8 +85,6 @@ public class SpawnManager : MonoBehaviour
         wave.numberOfEnemies += 3;
 
         currentWave++;
-
-        Debug.Log("Wave compeleted" + wave.numberOfEnemies);
     }
 
     bool IsEnemyAlive()
