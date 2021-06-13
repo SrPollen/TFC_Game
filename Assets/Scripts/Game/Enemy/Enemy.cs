@@ -34,17 +34,21 @@ public class Enemy : MonoBehaviour
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+    
+    //boosters
+    public int maxHealthBoost;
+    public int sightRangeBoost;
 
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         _animator = skin.GetComponent<Animator>();
-        
+
         //health
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-        healthBar.SetHealth(maxHealth);
+        currentHealth = maxHealth + maxHealthBoost;
+        healthBar.SetMaxHealth(maxHealth + maxHealthBoost);
+        healthBar.SetHealth(maxHealth + maxHealthBoost);
     }
 
 
@@ -52,7 +56,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         //Check sight and range
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange + sightRangeBoost, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
@@ -145,7 +149,7 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
+        Gizmos.DrawWireSphere(transform.position, sightRange + sightRangeBoost);
         
         Vector3 direction = transform.forward * 10;
         Gizmos.color = Color.green;

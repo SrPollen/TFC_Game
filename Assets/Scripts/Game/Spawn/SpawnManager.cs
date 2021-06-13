@@ -40,6 +40,10 @@ public class SpawnManager : MonoBehaviour
         gameStarted = false;
         waveCountdown = timeBetweenWaves;
         currentWave = 1;
+        
+        //reseta los boosters
+        enemyStats.sightRangeBoost = 0;
+        enemyStats.maxHealthBoost = 0;
     }
 
     private void Update()
@@ -105,8 +109,8 @@ public class SpawnManager : MonoBehaviour
         state = SpawnState.Spawning;
 
         //Mejora de enemigos por oleada
-        enemyStats.sightRange += 5;
-        enemyStats.maxHealth += 15;
+        enemyStats.sightRangeBoost += 5;
+        enemyStats.maxHealthBoost += 15;
 
         for (int i = 0; i < wave.numberOfEnemies; i++)
         {

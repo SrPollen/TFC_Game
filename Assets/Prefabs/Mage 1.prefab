@@ -306,6 +306,8 @@ MonoBehaviour:
   attackRange: 25
   playerInSightRange: 0
   playerInAttackRange: 0
+  maxHealthBoost: 0
+  sightRangeBoost: 0
 --- !u!1 &7747511978315676134
 GameObject:
   m_ObjectHideFlags: 0
