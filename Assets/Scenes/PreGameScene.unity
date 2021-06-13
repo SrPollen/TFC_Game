@@ -25,7 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.6033731, g: 0.8436692, b: 0.8584906, a: 1}
+  m_SubtractiveShadowColor: {r: 0.75956744, g: 0.93940914, b: 0.9528302, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1755070574}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3012,7 +3012,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.6556604, g: 1, b: 0.99043506, a: 0}
+  m_BackGroundColor: {r: 0.75, g: 1, b: 0.9943182, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3052,7 +3052,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95734436}
-  m_LocalRotation: {x: 0.022630565, y: 0.000000027918187, z: -6.3196615e-10, w: 0.99974394}
+  m_LocalRotation: {x: 0.022630565, y: 0.00000002741629, z: -6.20605e-10, w: 0.99974394}
   m_LocalPosition: {x: 0, y: 1.9129715, z: -7.3989487}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -22061,7 +22061,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747060788}
-  m_LocalRotation: {x: -0.0064338343, y: 0.0000000013969551, z: 8.987963e-12, w: 0.9999793}
+  m_LocalRotation: {x: -0.0064338334, y: -2.6239702e-10, z: -1.6882538e-12, w: 0.9999793}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -48581,7 +48581,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744357253}
-  m_LocalRotation: {x: 0.029894605, y: 0.000000017198698, z: -5.143781e-10, w: 0.9995531}
+  m_LocalRotation: {x: 0.029894626, y: -0.000000017198687, z: 5.1437815e-10, w: 0.9995531}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -48967,7 +48967,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1.2
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
