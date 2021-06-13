@@ -191,6 +191,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isDead) return;
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
         if (currentHealth <= 0)
@@ -205,7 +206,8 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            if (isDead) break;
+            yield return new WaitForSeconds(2f);
             _currentTimeBeforeHeal--;
             if (_currentTimeBeforeHeal <= 0)
             {
