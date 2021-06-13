@@ -41,12 +41,15 @@ public class Enemy : MonoBehaviour
 
     public GameGlobalStats globalStats;
 
+    private bool _canAttack;
+
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         globalStats = GameObject.Find("GameManager").GetComponent<GameGlobalStats>();
         agent = GetComponent<NavMeshAgent>();
         _animator = skin.GetComponent<Animator>();
+        _canAttack = true;
 
         //health
         currentHealth = maxHealth + maxHealthBoost;
@@ -107,7 +110,7 @@ public class Enemy : MonoBehaviour
 
         transform.LookAt(player);
         
-        if (!_alreadyAttacked)
+        if (!_alreadyAttacked && _canAttack)
         {
             //Ataques
             Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
@@ -140,8 +143,13 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        _canAttack = false;
+        agent.SetDestination(transform.position);
+        
         globalStats.Kills = globalStats.Kills + 1;
-        DestroyEnemy();
+        
+        _animator.SetTrigger("isDead");
+        Invoke(nameof(DestroyEnemy), 2f);
     }
     private void DestroyEnemy()
     {

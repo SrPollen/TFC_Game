@@ -61,6 +61,9 @@ public class PlayerController : MonoBehaviour
     public GameGlobalStats globalStats; 
     private int _kills = 0;
     private int _totalDamage = 0;
+    
+    
+    private bool isDead = false;
 
     private void OnEnable()
     {
@@ -97,6 +100,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
+        
         _groundedPlayer = _controller.isGrounded;
 
         if (_groundedPlayer && _playerVelocity.y < 0)
@@ -147,6 +152,11 @@ public class PlayerController : MonoBehaviour
         CheckAttack();
         CheckDefense();
         UpdateAnimator();
+        
+        if (Keyboard.current.iKey.wasPressedThisFrame)
+        {
+            Die();
+        }
     }
 
     //Animations and run
@@ -185,7 +195,7 @@ public class PlayerController : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         if (currentHealth <= 0)
         {
-            StartCoroutine(nameof(EndGame));
+           Die();
         }
 
         _currentTimeBeforeHeal = timeBeforeHeal;
@@ -272,10 +282,16 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
+    private void Die()
+    {
+        isDead = true;
+        _animator.SetTrigger("isDead");
+        StartCoroutine(nameof(EndGame));
+    }
     IEnumerator EndGame()
     {
-        yield return new WaitForSeconds(1f);
-
+        yield return new WaitForSeconds(3f);
+        
         //Time.timeScale = 0;
         
         globalStats.Damage = _totalDamage;
