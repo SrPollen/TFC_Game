@@ -14,18 +14,18 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
+  m_Fog: 1
+  m_FogColor: {r: 0.8915094, g: 1, b: 0.98615015, a: 1}
+  m_FogMode: 1
   m_FogDensity: 0.01
-  m_LinearFogStart: 0
-  m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.24530526, g: 0.44528738, b: 0.495283, a: 1}
+  m_LinearFogStart: 10
+  m_LinearFogEnd: 200
+  m_AmbientSkyColor: {r: 0.076946534, g: 0.076946534, b: 0.076946534, a: 1}
   m_AmbientEquatorColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
   m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.514151, g: 0.9743933, b: 1, a: 1}
+  m_SubtractiveShadowColor: {r: 0.6033731, g: 0.8436692, b: 0.8584906, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: c6196ad829073a4468d9f11ebcf43ae8, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3052,7 +3052,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95734436}
-  m_LocalRotation: {x: 0.022630565, y: 0.000000027304251, z: -6.180689e-10, w: 0.99974394}
+  m_LocalRotation: {x: 0.022630565, y: 0.000000027918187, z: -6.3196615e-10, w: 0.99974394}
   m_LocalPosition: {x: 0, y: 1.9129715, z: -7.3989487}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -22061,7 +22061,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747060788}
-  m_LocalRotation: {x: -0.006433837, y: -5.755771e-10, z: -3.7032456e-12, w: 0.9999793}
+  m_LocalRotation: {x: -0.0064338343, y: 0.0000000013969551, z: 8.987963e-12, w: 0.9999793}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
