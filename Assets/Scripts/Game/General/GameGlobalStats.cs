@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Text;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameGlobalStats : MonoBehaviour
@@ -39,6 +41,9 @@ public class GameGlobalStats : MonoBehaviour
         public int kills;
         public int damage;
     }
+    
+    //Para el gameover ui
+    [SerializeField] private GameObject gameOverUI;
 
     void Start()
     {
@@ -69,9 +74,18 @@ public class GameGlobalStats : MonoBehaviour
                 UpdateSpawningUI();
                 break;
         }
+
+        if (endGame)
+        {
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+            {
+                SceneManager.LoadScene("MainMenuScene");
+            }
+        }
         
         if (endGame && !_isSended)
         {
+            gameOverUI.SetActive(true);
             PutGame();
         }
     }
