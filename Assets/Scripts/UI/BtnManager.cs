@@ -7,43 +7,42 @@ using UnityEngine.SceneManagement;
 
 public class BtnManager : MonoBehaviour
 {
-    public AudioClip overSound, clickSound;
-    private AudioSource _audioSource;
     private string gameScene = "PreGameScene";
     private string creditsScene = "Credits";
     private string loginScene = "LoginScene";
-    
 
     private void Start()
     {
-        _audioSource = GameObject.Find("AudioController")?.GetComponent<AudioSource>();
+        FindObjectOfType<AudioManager>().Play("MainTheme");
     }
 
     public void CustomMouseEnter()
     {
-        _audioSource.PlayOneShot(overSound, 1);
+        FindObjectOfType<AudioManager>().Play("HoverButton");
     }
 
     public void ExitAction()
     {
+        FindObjectOfType<AudioManager>().Play("ClickButton");
         Application.Quit();
     }
 
     public void PlayAction()
     {
-        Debug.Log("Play");
+        FindObjectOfType<AudioManager>().Play("ClickButton");
         SceneManager.LoadScene(gameScene);
     }
 
     public void CreditAction()
     {
-        Debug.Log("Credits");
+        FindObjectOfType<AudioManager>().Play("ClickButton");
+        FindObjectOfType<AudioManager>().Stop("MainTheme");
         SceneManager.LoadScene(creditsScene);
     }
 
     public void LogOutAction()
     {
-        Debug.Log("LogOut");
+        FindObjectOfType<AudioManager>().Play("ClickButton");
         SceneManager.LoadScene(loginScene);
     }
 }

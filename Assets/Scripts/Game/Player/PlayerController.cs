@@ -184,6 +184,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isDefending", _isDefending);
     }
 
+    //Chekea el suelo con un raycast
     private bool IsGrounded()
     {
         return Physics.Raycast(transform.position, Vector3.down, distToGround);
@@ -202,6 +203,7 @@ public class PlayerController : MonoBehaviour
         _currentTimeBeforeHeal = timeBeforeHeal;
     }
 
+    //para que se cure pasivamente
     IEnumerator HealCoroutine()
     {
         while (true)
@@ -224,6 +226,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //cada iteracion de curacion para que sea "smooth"
     private void PasiveHealing()
     {
         if (_canHeal && currentHealth < maxHealth)
@@ -257,6 +260,16 @@ public class PlayerController : MonoBehaviour
             enemy.GetComponent<Enemy>().TakeDamage(playerDamage);
             _totalDamage += playerDamage;
         }
+        //para el sonido
+        if (enemies.Length <= 0)
+        {
+            FindObjectOfType<AudioManager>().Play("PlayerAttack");
+        }
+        else
+        {
+            FindObjectOfType<AudioManager>().Play("PlayerHitEnemy");
+        }
+
     }
 
     IEnumerator AttackCd()

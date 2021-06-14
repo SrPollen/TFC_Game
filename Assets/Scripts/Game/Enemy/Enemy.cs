@@ -56,12 +56,10 @@ public class Enemy : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth + maxHealthBoost);
         healthBar.SetHealth(maxHealth + maxHealthBoost);
     }
-
-
-    // Update is called once per frame
+    
     void Update()
     {
-        //Check sight and range
+        //Checkea el sight y range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange + sightRangeBoost, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
@@ -69,8 +67,7 @@ public class Enemy : MonoBehaviour
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInSightRange && playerInAttackRange) AttackPlayer();
     }
-
-
+    
     private void Patroling()
     {
         _animator.SetBool("isRunning", false);
@@ -129,6 +126,7 @@ public class Enemy : MonoBehaviour
         _animator.ResetTrigger("isAttacking");
         _animator.SetTrigger("isAttacking");
     }
+    
     private void ResetAttack()
     {
         _alreadyAttacked = false;
@@ -151,6 +149,7 @@ public class Enemy : MonoBehaviour
         _animator.SetTrigger("isDead");
         Invoke(nameof(DestroyEnemy), 2f);
     }
+    
     private void DestroyEnemy()
     {
         Destroy(gameObject);
