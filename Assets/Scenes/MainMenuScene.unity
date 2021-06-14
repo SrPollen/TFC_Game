@@ -8927,7 +8927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8570128830542589221, guid: 685b72b14c776a0408e6bba3fb91522a, type: 3}
       propertyPath: sounds.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8570128830542589221, guid: 685b72b14c776a0408e6bba3fb91522a, type: 3}
       propertyPath: sounds.Array.data[0].loop
@@ -8958,6 +8958,14 @@ PrefabInstance:
       value: PlayerHitEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 8570128830542589221, guid: 685b72b14c776a0408e6bba3fb91522a, type: 3}
+      propertyPath: sounds.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 34780d7cc3e14d347a0837f29cec8630, type: 3}
+    - target: {fileID: 8570128830542589221, guid: 685b72b14c776a0408e6bba3fb91522a, type: 3}
+      propertyPath: sounds.Array.data[5].name
+      value: Explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570128830542589221, guid: 685b72b14c776a0408e6bba3fb91522a, type: 3}
       propertyPath: sounds.Array.data[0].pitch
       value: 1
       objectReference: {fileID: 0}
@@ -8978,6 +8986,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8570128830542589221, guid: 685b72b14c776a0408e6bba3fb91522a, type: 3}
+      propertyPath: sounds.Array.data[5].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570128830542589221, guid: 685b72b14c776a0408e6bba3fb91522a, type: 3}
       propertyPath: sounds.Array.data[0].volume
       value: 0.4
       objectReference: {fileID: 0}
@@ -8992,6 +9004,10 @@ PrefabInstance:
     - target: {fileID: 8570128830542589221, guid: 685b72b14c776a0408e6bba3fb91522a, type: 3}
       propertyPath: sounds.Array.data[4].volume
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570128830542589221, guid: 685b72b14c776a0408e6bba3fb91522a, type: 3}
+      propertyPath: sounds.Array.data[5].volume
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8570128830542589243, guid: 685b72b14c776a0408e6bba3fb91522a, type: 3}
       propertyPath: m_Name

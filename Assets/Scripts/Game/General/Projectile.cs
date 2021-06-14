@@ -6,8 +6,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     //hay que cambiar interpolate y collision Detection(continuos) en el rb para que no atraviesen las paredes
-    
-    
+
     public Rigidbody rb;
     public GameObject explosion;
     public LayerMask whatIsPlayer;
@@ -48,9 +47,11 @@ public class Projectile : MonoBehaviour
         //Instanciate explosion
         //if (explosion != null)
         GameObject explosionParticles = Instantiate(explosion, transform.position, Quaternion.identity);
+        
+        FindObjectOfType<AudioManager>().Play("Explosion");
         Destroy(explosionParticles, 3f);
         
-        // Check target (440)
+        // Check target 
         Collider[] players = Physics.OverlapSphere(transform.position, explosionRange, whatIsPlayer);
         foreach (var player in players)
         {

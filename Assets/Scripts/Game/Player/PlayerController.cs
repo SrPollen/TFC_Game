@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     public HealthBar healthBar;
 
     //healing
-    [SerializeField] private int timeBeforeHeal = 5;
+    [SerializeField] private int timeBeforeHeal = 3;
     private int _currentTimeBeforeHeal;
     private bool _canHeal;
     
@@ -153,6 +153,8 @@ public class PlayerController : MonoBehaviour
         CheckDefense();
         UpdateAnimator();
         
+        
+        //pruebas
         if (Keyboard.current.iKey.wasPressedThisFrame)
         {
             Die();
@@ -192,7 +194,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (isDead) return;
+        if (isDead || _isDefending) return;
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
         if (currentHealth <= 0)
@@ -287,6 +289,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            //para que no se cure mientras defiende
+            _currentTimeBeforeHeal = timeBeforeHeal;
             _isDefending = true;
         }
     }
