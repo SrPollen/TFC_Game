@@ -88,6 +88,8 @@ public class PlayerController : MonoBehaviour
     {
         _controller = gameObject.GetComponent<CharacterController>();
         _cameraMainTransform = Camera.main.transform;
+        
+        FindObjectOfType<AudioManager>().Play("TutorialVoice");
 
         //health
         currentHealth = maxHealth;

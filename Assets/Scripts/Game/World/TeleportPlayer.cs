@@ -14,7 +14,8 @@ public class TeleportPlayer : MonoBehaviour
         {
             globalStats.gameStarted = true;
             spawnManager.gameStarted = true;
-            //FindObjectOfType<AudioManager>().Stop("TutorialVoice");
+            
+            FindObjectOfType<AudioManager>().Stop("TutorialVoice");
             tutorialText.SetActive(false);
             FindObjectOfType<AudioManager>().Stop("MainTheme");
             FindObjectOfType<AudioManager>().Play("BattleMusic");
