@@ -312,7 +312,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         
         //Time.timeScale = 0;
-        
+        FindObjectOfType<AudioManager>().Stop("BattleMusic");
         globalStats.Damage = _totalDamage;
         globalStats.endGame = true;
     }

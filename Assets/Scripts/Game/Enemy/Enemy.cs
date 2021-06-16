@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private GameObject skin;
     private Animator _animator;
-    
+
     public NavMeshAgent agent;
 
     public Transform player;
@@ -29,12 +29,12 @@ public class Enemy : MonoBehaviour
     //Attacking
     public float timeBetweenAttacks;
     private bool _alreadyAttacked;
-    
+
 
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
-    
+
     //boosters
     public int maxHealthBoost;
     public int sightRangeBoost;
@@ -42,6 +42,9 @@ public class Enemy : MonoBehaviour
     public GameGlobalStats globalStats;
 
     private bool _canAttack;
+
+    private bool _sightVoice;
+    public string[] sightVoices = {"EnemySight", "EnemySight1", "EnemySight2"};
 
     private void Awake()
     {
@@ -55,6 +58,9 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth + maxHealthBoost;
         healthBar.SetMaxHealth(maxHealth + maxHealthBoost);
         healthBar.SetHealth(maxHealth + maxHealthBoost);
+        
+        //voice
+        _sightVoice = true;
     }
     
     void Update()
@@ -72,6 +78,8 @@ public class Enemy : MonoBehaviour
     {
         _animator.SetBool("isRunning", false);
         _animator.SetBool("isWalking", true);
+        _sightVoice = true;
+        
         if (!walkPointSet) SearchWalkPoint();
         if (walkPointSet) agent.SetDestination(walkPoint);
 
@@ -95,6 +103,15 @@ public class Enemy : MonoBehaviour
     {
         _animator.SetBool("isRunning", true);
         _animator.SetBool("isWalking", false);
+        if (_sightVoice)
+        {
+            _sightVoice = false;
+            int rand = Random.Range(0, sightVoices.Length + 6);
+            if (rand <= sightVoices.Length-1)
+            {
+                FindObjectOfType<AudioManager>().Play(sightVoices[rand]);
+            }
+        }
         agent.SetDestination(player.position);
     }
 

@@ -6,6 +6,7 @@ public class TeleportPlayer : MonoBehaviour
     
     [SerializeField] private SpawnManager spawnManager;
     [SerializeField] private GameGlobalStats globalStats;
+    [SerializeField] private GameObject tutorialText;
     
     private void OnTriggerEnter(Collider other)
     {
@@ -13,6 +14,10 @@ public class TeleportPlayer : MonoBehaviour
         {
             globalStats.gameStarted = true;
             spawnManager.gameStarted = true;
+            //FindObjectOfType<AudioManager>().Stop("TutorialVoice");
+            tutorialText.SetActive(false);
+            FindObjectOfType<AudioManager>().Stop("MainTheme");
+            FindObjectOfType<AudioManager>().Play("BattleMusic");
             other.gameObject.GetComponent<CharacterController>().Move(tpPos);
         }
     }
